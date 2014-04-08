@@ -1,4 +1,4 @@
-drdobbsindia-jquery-workshop
+Dr. Dobbs India jQuery Workshop
 ============================
 
-Code for my Dr. Dobbs India jQuery workshiop
+Code for my Dr. Dobbs India jQuery workshop
