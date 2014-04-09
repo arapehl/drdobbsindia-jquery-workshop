@@ -121,6 +121,22 @@ function example9() {
   });
 }
 
+function example9() {
+  $('h1').on('click', function () {
+    $(this).html(new Date().getTime());
+  });
+  $('h1').on('click.toggle', function () {
+    $(this).toggleClass('bar');
+  });
+  $('h1').on('click.toggle', function () {
+    $(this).toggleClass('foo');
+  });
+  $(document).on('keyup', function (e) {
+    if (e.keyCode === 27) {
+      $('h1').off('.toggle');
+    }
+  });
+}
 /*
  * Example 10
  * Convert previous 'contains even' map example to a custom selector
@@ -164,6 +180,18 @@ function example10() {
  *
  * deferred execution
  */
+function example11() {
+  function a1() {
+    console.log('always', arguments);
+  }
+  function f1() {
+    console.log('failed', arguments);
+  }
+  function r1() {
+    console.log('resolved', arguments);
+  }
+  $.get('LICENSE').always(a1).fail(f1).done(r1);
+}
 
 /*
  * Run all examples
