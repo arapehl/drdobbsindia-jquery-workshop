@@ -33,18 +33,18 @@ function example3b() {
 }
 
 /*
- * Example 7
+ * Example 4
  * Find the second list item as well as every subsequent list item in the unordered list
  */
-function example7() {
+function example4() {
   return $('ul').find('li:nth-child(2)').nextAll().andSelf();
 }
 
 /*
- * Example 8
- * Select all paragraphs in the page containing an even number
+ * Example 5
+ * Select all paragraphs in the page whose text contains an even number
  */
-function example8() {
+function example5() {
   return $('p').map(function (idx, el) {
     var text = $(el).text(),
         num = text.replace(/Paragraph\s/, ''),
@@ -54,28 +54,28 @@ function example8() {
 }
 
 /*
- * Example 9A
+ * Example 6A
  * Create a paragraph with an anchor in it and append it to the first section element
  */
-function example9a() {
-  return $('section:first').append('<p><a></a></p>').find('a').attr('href', 'http://www.cakemail.com/').text('anchor 9a');
+function example6a() {
+  return $('section:first').append('<p><a></a></p>').find('a').attr('href', 'http://www.cakemail.com/').text('Click me!');
 }
 
 /*
- * Example 9B
+ * Example 6B
  * Create a paragraph with an anchor in it and append it to the first section element
  */
-function example9b() {
-  return $('<p><a></a></p>').find('a').attr('href', 'http://www.cakemail.com/').text('anchor 9b').end().appendTo('section:first');
+function example6b() {
+  return $('<p><a></a></p>').find('a').attr('href', 'http://www.cakemail.com/').text('Click me!').end().appendTo('section:first');
 }
 
 /*
- * Example 10
+ * Example 7 
  * Modify the foreground/background colours and font weight of the second section element
  * wrap it in a div
  * add the class .foo to the div
  */
-function example10() {
+function example7() {
   return $('section').last()
     .css({'color': 'white', 'background': 'green', 'fontWeight': 'bold'})
     .wrap('<div></div>')
@@ -84,12 +84,11 @@ function example10() {
 }
 
 /*
- * Example 11
- * Read the price data from the unordered list items,
- * add a 10% tax to each 
- * write the new data to each ordered list counterpart
+ * Example 8
+ * Read the price data from the unordered list items
+ * add the price plus 10% tax to each corresponding ordered list item
  */
-function example11() {
+function example8() {
   $('ul li').each(function (idx, el) {
     var price = $(el).data('price') * 1.10;
     $('ol li').eq(idx).data('price', price);
@@ -97,7 +96,7 @@ function example11() {
 }
 
 /*
- * Example 12
+ * Example 9
  * Attach three click handlers to the H1 elements in the page
  *   1st one changes the html contents of the clicked H1 to the ms value of the current time
  *   2nd one toggles the .bar class on the clicked H1
@@ -105,7 +104,7 @@ function example11() {
  * Give the two toggle handlers the '.toggle' namespace
  * When the user presses the ESC key, remove the namespaced handlers
  */
-function example12() {
+function example9() {
   $('h1').on('click', function () {
     $(this).html(new Date().getTime());
   });
@@ -123,10 +122,10 @@ function example12() {
 }
 
 /*
- * Example 13
+ * Example 10
  * Convert previous 'contains even' map example to a custom selector
  */
-function example13() {
+function example10() {
   $.expr[':'].containsEven = function(obj, index, meta, stack) {
     var text = $(obj).text(),
         num = text.replace(/Paragraph\s/, ''),
@@ -158,6 +157,9 @@ function example13() {
 
     // Usage:
     $('.someClasses:test').doSomething();
+
+
+    $(this).stop(true, true).animate();
 
  *
  * deferred execution
