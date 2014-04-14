@@ -10,35 +10,397 @@
         background: black;
         color: white;
       }
+      .state {
+        background: green;
+        color: white;
+      }
+      .state.pending {
+        background: yellow;
+        color: black;
+      }
+      textarea {
+        font-family: monospace;
+        font-weight: bold;
+        font-size: 125%;
+        white-space: pre;
+        display: block;
+        width: 500px;
+        height: 100px;
+      }
+      #slideNumWrapper {
+        clear: both;
+        float: none;
+        display: block;
+        padding: 15px;
+        border-bottom: solid 2px #666;
+        margin-bottom: 30px;
+        background: #ccc;
+      }
+      #markup,
+      #code {
+        float: left;
+        width: 45%;
+      }
     </style>
   </head>
   <body>
-    <section id="s1">
-      <h1>Section 1</h1>
-      <p id="s1p1" class="active section1">Paragraph 1</p>
-      <p id="s1p2" class="inactive section1">Paragraph 2</p>
-      <p id="s1p3" class="active section1">Paragraph 3</p>
-      <p id="s1p4" class="active section1">Paragraph 4</p>
-      <ul>
-        <li data-price="100">Unordered list item 1</li>
-        <li data-price="275">Unordered list item 2</li>
-        <li data-price="50">Unordered list item 3</li>
-        <li data-price="150">Unordered list item 4</li>
-      </ul>
-    </section>
-    <section id="s2">
-      <h1>Section 2</h1>
-      <p id="s2p1" class="active section2">Paragraph 1</p>
-      <p id="s2p2" class="inactive section2">Paragraph 2</p>
-      <p id="s2p3" class="active section2">Paragraph 3</p>
-      <p id="s2p4" class="active section2">Paragraph 4</p>
-      <ol>
-        <li>Ordered list item 1</li>
-        <li>Ordered list item 2</li>
-        <li>Ordered list item 3</li>
-        <li>Ordered list item 4</li>
-      </ol>
-    </section>
+    <script id="markupTemplate" type="text/template">
+      <a href="http://www.drdobbsindia.com/">Dr. Dobbs India</a>
+      <div id="appointment1" data-date="2014-04-11">April 11, 2014</div>
+      <div id="appointment2">April 11, 2014</div>
+      <span class="state">State</span>
+      <section id="s1">
+        <h1>Section 1</h1>
+        <p id="s1p1" class="active section1">Paragraph 1</p>
+        <p id="s1p2" class="inactive section1">Paragraph 2</p>
+        <p id="s1p3" class="active section1">Paragraph 3</p>
+        <p id="s1p4" class="active section1">Paragraph 4</p>
+        <ul>
+          <li data-price="100">Unordered list item 1</li>
+          <li data-price="275">Unordered list item 2</li>
+          <li data-price="50">Unordered list item 3</li>
+          <li data-price="150">Unordered list item 4</li>
+        </ul>
+      </section>
+      <section id="s2">
+        <h1>Section 2</h1>
+        <p id="s2p1" class="active section2">Paragraph 1</p>
+        <p id="s2p2" class="inactive section2">Paragraph 2</p>
+        <p id="s2p3" class="active section2">Paragraph 3</p>
+        <p id="s2p4" class="active section2">Paragraph 4</p>
+        <ol>
+          <li>Ordered list item 1</li>
+          <li>Ordered list item 2</li>
+          <li>Ordered list item 3</li>
+          <li>Ordered list item 4</li>
+        </ol>
+      </section>
+    </script>
+    <div id="slideNumWrapper">
+      Slide: <select id="slideNum"></select> <button id="prev">&lt; &lt; Previous</button> <button id="next">Next &gt; &gt;</button>
+    </div>
+    <div id="markup"></div>
+    <div id="code">
+      <div class="slide">
+        <textarea readonly="readonly">
+$('p')</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('p').first();</textarea>
+        <textarea readonly="readonly">
+$('p').last();</textarea>
+        <textarea readonly="readonly">
+$('ul').find('li');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('p').filter('.inactive');</textarea>
+        <textarea readonly="readonly">
+$('p').filter(function () {
+  return $(this).hasClass('inactive');
+});</textarea>
+        <textarea readonly="readonly">
+$('p').map(function () {
+  return this.id;
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('p').map(function (idx, el) { 
+  var text = $(el).text(),
+  num = text.replace(/Paragraph\s/, ''),
+  num = parseInt(num, 10);
+  return num % 2 === 0 ? el : undefined;
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('#s2').prev();</textarea>
+        <textarea readonly="readonly">
+$('#s2p4').prevAll();</textarea>
+        <textarea readonly="readonly">
+$('#s2p4').prevUntil('.inactive');
+        </textarea>
+      </div>
+      <div class="slide">
+      <textarea readonly="readonly">
+$('#s1').next();</textarea>
+        <textarea readonly="readonly">
+$('#s1p1').nextAll();</textarea>
+        <textarea readonly="readonly">
+$('#s1p1').nextUntil('ul');</textarea>
+      </div>
+      <div class="slide">
+      <textarea readonly="readonly">
+$('#s1').parent();</textarea>
+        <textarea readonly="readonly">
+$('p').closest('section');</textarea>
+        <textarea readonly="readonly">
+$('#s1p3').siblings();</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('#s1p3').siblings().andSelf();</textarea>
+        <textarea readonly="readonly">
+$('#s1p4').parent().next();</textarea>
+        <textarea readonly="readonly">
+$('#s2p1').add($('#s1p1'));</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('p:even');</textarea>
+        <textarea readonly="readonly">
+$('p:odd');</textarea>
+        <textarea readonly="readonly">
+$('p:first');</textarea>
+        <textarea readonly="readonly">
+$('p:last');</textarea>
+        <textarea readonly="readonly">
+$('p:not(".inactive")');
+        </textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$(':header');</textarea>
+        <textarea readonly="readonly">
+$('li:nth-child(2)');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('li');</textarea>
+        <textarea readonly="readonly">
+$('li', 'ul');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$(':nth-child(2)');</textarea>
+        <textarea readonly="readonly">
+$(':nth-child(2)', 'ul');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('ol').html();</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('ol').text();</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('&lt;p&gt;&lt;/p&gt;');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('&lt;p&gt;Where\'s the party?&lt;/p&gt;').appendTo('#s1');</textarea>
+        <textarea readonly="readonly">
+$('#s1').append('&lt;p&gt;I\'m new!&lt;/p&gt;');</textarea>
+        <textarea readonly="readonly">
+$('#s1').prepend('&lt;p&gt;So am I!&lt;/p&gt;');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('li').wrap('&lt;div class="slide"&gt;&lt;/div&gt;');</textarea>
+        <textarea readonly="readonly">
+$('li').unwrap();</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('li').wrapInner('&lt;div class="slide"&gt;&lt;/div&gt;');</textarea>
+        <textarea readonly="readonly">
+$('li').wrapAll('&lt;div class="slide"&gt;&lt;/div&gt;');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('&lt;p class="foo" id="bar" style="color: red;"&gt;hello&lt;/p&gt;');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('p').addClass('foo').attr('id', 'bar').css('color', 'red');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('#appointment1').data('date');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('ul li').data('price');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('ul li').each(function (idx, el) { 
+  console.log($(el).data('price'));
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('#appointment2').data('date', '2014-04-11');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('ol li').data('price', 100);</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('ul li').each(function (idx, el) {
+  var price = $(el).data('price') * 1.10;
+  $('ol li').eq(idx).data('price', price);
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('a').on('click', function (e) {
+  e.preventDefault(); // do something
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('a').on('click', 
+  {priority: 'high'},
+  function (e) {
+    e.preventDefault();
+    console.log(e.data.priority);
+  }
+);</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$(document).on('click', 'a', function (e) { 
+  e.preventDefault(); // do something
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('.state').on('dataReady', function (e, payload) {
+  $(this).addClass(payload.state);
+});</textarea>
+        <textarea readonly="readonly">
+$('.state').trigger('dataReady', {
+  state: 'pending'
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('a').on('click.loggedIn', function (e) {
+  console.log('logged in click')
+});</textarea>
+        <textarea readonly="readonly">
+$('a').on('mouseover.loggedIn', function (e) {
+  console.log('logged in mouseover');
+});</textarea>
+        <textarea readonly="readonly">
+$('a').off('.loggedIn');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('li').on('click', function (e) {
+  console.log('li clicked!');
+});</textarea>
+        <textarea readonly="readonly">
+$('ul').on('click', function (e) {
+  console.log('ul clicked!');
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$('li').on('click', function (e) {
+  e.stopPropagation();
+  console.log('li clicked!');
+});</textarea>
+        <textarea readonly="readonly">
+$('ul').on('click', function (e) {
+  console.log('ul clicked!');
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$(document).on('ready', function () {
+  console.log('Will not fire if assigned late.');
+});</textarea>
+        <textarea readonly="readonly">
+$(document).ready(function () {
+  console.log('Will fire even if assigned late.');
+});</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$.expr[':'].inactive = function (el) {
+  return $(el).hasClass('inactive');
+};</textarea>
+        <textarea readonly="readonly">
+$('p:inactive');</textarea>
+      </div>
+      <div class="slide">
+        <textarea readonly="readonly">
+$.fn.hideRemove = function () {
+  return this.hide('slow', function () {
+    $(this).remove();
+  });
+};</textarea>
+        <textarea readonly="readonly">
+$('p').hideRemove();</textarea>
+      </div>
+    </div>
     <script src="jquery-2.1.0.min.js"></script>
+    <script>
+      var pointer = parseInt(window.location.hash.replace(/#/, ''), 10) || 0,
+      len = $('.slide').hide().length - 1;
+
+      // Core functions
+      function refreshMarkup() {
+        $('#markup').empty().append($('#markupTemplate').html());
+      }
+
+      function gotoSlide(idx) {
+        if (idx > len) {
+          idx = len;
+        } else if (idx < 0) {
+          idx = 0;
+        }
+        pointer = idx;
+        $('.slide').hide().eq(pointer).show();
+        $('#slideNum').val(pointer);
+        window.location.hash = pointer;
+        refreshMarkup();
+      }
+
+      function navigateSlide(dir) {
+        if (dir === 'prev') {
+          pointer = pointer > 0 ? pointer - 1 : len;
+        } else if (dir === 'next') {
+          pointer = pointer < len ? pointer + 1 : 0;
+        }
+        gotoSlide(pointer);
+      }
+
+      // Assign event handlers
+      $(document).on('keyup', function (e) {
+        if (e.keyCode === 37) {
+          navigateSlide('prev');
+        } else if (e.keyCode === 39) {
+          navigateSlide('next');
+        }
+      });
+
+      $('#slideNum').on('change', function () {
+        gotoSlide(parseInt(this.value, 10));
+      });
+
+      $('#prev').on('click', function () {
+        navigateSlide('prev');
+      });
+
+      $('#next').on('click', function () {
+        navigateSlide('next');
+      });
+
+      // Populate slide dropdown
+      $('.slide').each(function (i, val) {
+        $('#slideNum').append('<option value="' + i + '">' + i + '</option');
+      });
+
+      // Initialize on first slide
+      gotoSlide(pointer);
+    </script>
   </body>
 </html>
